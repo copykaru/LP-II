@@ -47,3 +47,75 @@ guess_age()
 count()
 test()
 end()
+
+
+       #OR
+
+
+# Importing necessary modules  
+from chatterbot import ChatBot 
+from chatterbot.trainers import ListTrainer 
+ 
+# Creating a new chatbot instance named 'PyBot' 
+my_bot = ChatBot( 
+    name='PyBot', 
+    read_only=True, 
+    logic_adapters=[ 
+        'chatterbot.logic.MathematicalEvaluation', 
+        'chatterbot.logic.BestMatch' 
+    ] 
+) 
+ 
+# Training data for small talk 
+small_talk = [ 
+    'hi there!', 
+    'hi!', 
+    'how do you do?', 
+    'how are you?', 
+    'i\'m cool.', 
+    'fine, you?', 
+    'always cool.', 
+    'i\'m ok', 
+    'glad to hear that.', 
+    'i\'m fine', 
+    'glad to hear that.', 
+    'i feel awesome', 
+    'excellent, glad to hear that.', 
+    'not so good', 
+    'sorry to hear that.', 
+    'what\'s your name?', 
+    'i\'m pybot. ask me a math question, please.' 
+] 
+ 
+# Training data for mathematical concepts 
+math_talk_1 = [ 
+    'pythagorean theorem', 
+    'a squared plus b squared equals c squared.' 
+] 
+ 
+math_talk_2 = [ 
+    'law of cosines', 
+    'c**2 = a**2 + b**2 - 2 * a * b * cos(gamma)' 
+] 
+ 
+# Combine all the conversations 
+training_data = small_talk + math_talk_1 + math_talk_2 
+ 
+# Training the chatbot with the data 
+trainer = ListTrainer(my_bot) 
+trainer.train(training_data) 
+ 
+# Function to start the chatbot interaction 
+def chatbot(): 
+    print("Hello! I am PyBot. Type 'bye' to exit.") 
+    while True: 
+        user_input = input("You: ") 
+        if user_input.lower() == 'bye': 
+            print("PyBot: Goodbye! Have a great day!") 
+            break 
+        response = my_bot.get_response(user_input) 
+        print(f"PyBot: {response}") 
+ 
+# Run the chatbot 
+if __name__ == "__main__": 
+    chatbot()
